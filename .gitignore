@@ -34,8 +34,9 @@ frontend/.env
 frontend/.env.local
 
 # Backend
-backend/__pycache__/
-backend/**/__pycache__/
+backend/
+requirements.txt
+MONGODB_SETUP.md
 *.pyc
 
 # Reports
