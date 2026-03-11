@@ -34,7 +34,8 @@ frontend/.env
 frontend/.env.local
 
 # Backend
-backend/
+backend/**/*.py
+!backend/**/.gitkeep
 requirements.txt
 MONGODB_SETUP.md
 *.pyc
