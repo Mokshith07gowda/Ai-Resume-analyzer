@@ -85,7 +85,7 @@ function ResumeUpload() {
             
             <div className="section-divider">
               <p><strong>Skills:</strong></p>
-              <ul>
+              <ul className="skills-grid">
                 {result.resume_data.skills.map((skill, index) => (
                   <li key={index}>{skill}</li>
                 ))}
@@ -105,7 +105,7 @@ function ResumeUpload() {
 
             {result.resume_data.languages && result.resume_data.languages.length > 0 && (
               <div className="section-divider">
-                <p><strong>Languages:</strong></p>
+                <p><strong>Spoken Languages:</strong></p>
                 <ul>
                   {result.resume_data.languages.map((language, index) => (
                     <li key={index}>{language}</li>

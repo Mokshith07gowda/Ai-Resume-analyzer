@@ -189,6 +189,34 @@ function JDInput() {
                 )}
               </ul>
             </div>
+
+            {result.jd_data.scoring && (
+              <div className="jd-score-block">
+                <p><strong>JD Confidence & Role Fit Signals:</strong></p>
+                <div className="jd-score-grid">
+                  <div className="jd-score-card">
+                    <span className="jd-score-label">Skill Coverage</span>
+                    <span className="jd-score-value">{result.jd_data.scoring.skill_coverage_pct}%</span>
+                  </div>
+                  <div className="jd-score-card">
+                    <span className="jd-score-label">Top Keyword Density</span>
+                    <span className="jd-score-value">{result.jd_data.scoring.top_keyword_density_pct}%</span>
+                  </div>
+                </div>
+                <div className="jd-role-hints">
+                  <p><strong>Role Hints:</strong></p>
+                  {result.jd_data.scoring.role_hints && result.jd_data.scoring.role_hints.length > 0 ? (
+                    <ul>
+                      {result.jd_data.scoring.role_hints.map((role, index) => (
+                        <li key={index}>{role}</li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="jd-role-empty">No strong role hints found yet.</p>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}

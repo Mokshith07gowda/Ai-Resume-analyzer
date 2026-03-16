@@ -8,6 +8,7 @@ function SignIn({ onSwitchToSignUp, onSignInSuccess }) {
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [serverMessage, setServerMessage] = useState(null);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -25,6 +26,7 @@ function SignIn({ onSwitchToSignUp, onSignInSuccess }) {
         [name]: ''
       }));
     }
+    setServerMessage(null);
   };
 
   const validateForm = () => {
@@ -54,6 +56,7 @@ function SignIn({ onSwitchToSignUp, onSignInSuccess }) {
     }
 
     setIsLoading(true);
+    setServerMessage(null);
 
     try {
       const response = await fetch('http://localhost:8000/api/auth/login', {
@@ -70,19 +73,46 @@ function SignIn({ onSwitchToSignUp, onSignInSuccess }) {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.detail || 'Login failed');
+        if (response.status === 404) {
+          setServerMessage({ 
+            type: 'error', 
+            text: data.detail || 'Email not registered. Please sign up first.' 
+          });
+        } else if (response.status === 401) {
+          setServerMessage({ 
+            type: 'error', 
+            text: data.detail || 'Incorrect password. Please try again.' 
+          });
+        } else if (response.status === 403) {
+          setServerMessage({ 
+            type: 'error', 
+            text: data.detail || 'Your account has been disabled.' 
+          });
+        } else {
+          setServerMessage({ 
+            type: 'error', 
+            text: data.detail || 'Login failed. Please try again.' 
+          });
+        }
+        return;
       }
 
       console.log('Login successful:', data);
       
       localStorage.setItem('user', JSON.stringify(data.user));
+      localStorage.setItem('authToken', data.user.id);
       
-      onSignInSuccess && onSignInSuccess();
+      setServerMessage({ type: 'success', text: 'Login successful! Redirecting...' });
+      
+      setTimeout(() => {
+        onSignInSuccess && onSignInSuccess();
+      }, 1000);
       
     } catch (error) {
       console.error('Login error:', error);
-      setErrors({
-        email: error.message || 'Invalid email or password'
+      setServerMessage({ 
+        type: 'error', 
+        text: 'Unable to connect to server. Please try again later.' 
       });
     } finally {
       setIsLoading(false);
@@ -138,6 +168,12 @@ function SignIn({ onSwitchToSignUp, onSignInSuccess }) {
                 <h2>Welcome Back</h2>
                 <p>Sign in to access your AI Resume Analyzer account</p>
               </div>
+
+              {serverMessage && (
+                <div className={`server-message ${serverMessage.type}`}>
+                  {serverMessage.text}
+                </div>
+              )}
 
               <form onSubmit={handleSubmit} className="auth-form">
                 <div className="form-group">

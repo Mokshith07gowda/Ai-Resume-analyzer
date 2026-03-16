@@ -1,0 +1,63 @@
+[
+	"Python", "Java", "C", "C++", "C#", "Go", "Rust", "Swift", "Kotlin", "Scala", "Dart", "R", "MATLAB", "Julia", "TypeScript", "JavaScript", "HTML", "CSS",
+	"SQL", "NoSQL", "GraphQL", "Bash", "PowerShell", "Assembly", "COBOL", "Fortran", "Groovy", "Haskell", "Elixir", "OCaml", "Nim", "Crystal", "Zig",
+
+	"React", "Angular", "Vue.js", "Next.js", "Nuxt.js", "Svelte", "Redux", "jQuery", "Bootstrap", "Tailwind CSS", "Material UI", "Ant Design",
+
+	"Node.js", "Express.js", "Spring Boot", "Spring Framework", "Django", "Flask", "FastAPI", "Ruby on Rails", "Laravel", "ASP.NET", "ASP.NET Core",
+	"NestJS", "Meteor", "Strapi", "AdonisJS", "Phoenix", "Fiber", "Gin", "Koa", "Hapi",
+
+	"TensorFlow", "PyTorch", "Keras", "Scikit-learn", "XGBoost", "LightGBM", "CatBoost", "OpenCV", "NLTK", "spaCy", "Gensim", "Hugging Face",
+	"Transformers", "Deep Learning", "Machine Learning", "Artificial Intelligence", "Computer Vision", "Natural Language Processing",
+	"Speech Recognition", "Reinforcement Learning", "Recommendation Systems", "Time Series Analysis",
+
+	"Pandas", "NumPy", "Matplotlib", "Seaborn", "Plotly", "Statsmodels", "SciPy", "Dask", "Polars",
+
+	"MySQL", "PostgreSQL", "SQLite", "MongoDB", "Redis", "Cassandra", "MariaDB", "Oracle DB", "Neo4j", "DynamoDB", "Firebase",
+	"ElasticSearch", "Solr", "InfluxDB", "CouchDB", "CockroachDB",
+
+	"AWS", "Microsoft Azure", "Google Cloud", "Heroku", "DigitalOcean", "Linode", "Vercel", "Netlify",
+	"AWS EC2", "AWS S3", "AWS Lambda", "AWS RDS", "AWS DynamoDB", "AWS CloudWatch", "AWS IAM",
+	"Azure Functions", "Azure Blob Storage", "Azure DevOps", "Google Cloud Functions", "Google BigQuery", "Google Firebase",
+
+	"Docker", "Kubernetes", "Podman", "Helm", "Terraform", "Ansible", "Chef", "Puppet", "Jenkins", "GitHub Actions", "GitLab CI", "CircleCI", "Travis CI",
+	"ArgoCD", "FluxCD",
+
+	"Git", "GitHub", "GitLab", "Bitbucket", "SVN", "Mercurial",
+
+	"Linux", "Unix", "Ubuntu", "CentOS", "Debian", "RedHat", "Fedora", "Alpine Linux", "Windows Server", "MacOS",
+
+	"REST API", "SOAP", "gRPC", "WebSockets", "Microservices", "Serverless Architecture", "Event Driven Architecture",
+
+	"Kafka", "RabbitMQ", "ActiveMQ", "ZeroMQ", "NATS", "Redis Streams",
+
+	"Spark", "Hadoop", "Hive", "Pig", "Flink", "Presto", "Airflow", "Luigi", "Beam",
+
+	"Power BI", "Tableau", "Looker", "Superset", "Metabase", "QlikView", "Qlik Sense",
+
+	"Data Warehousing", "Data Lakes", "ETL", "Data Pipelines", "Data Engineering", "Feature Engineering", "Model Deployment", "MLOps",
+
+	"JUnit", "TestNG", "Selenium", "Cypress", "Playwright", "Jest", "Mocha", "Chai", "PyTest", "Robot Framework",
+
+	"Cybersecurity", "Penetration Testing", "Ethical Hacking", "Network Security", "Cryptography", "SIEM", "Firewalls", "Identity Management",
+
+	"Computer Networks", "TCP/IP", "DNS", "HTTP", "HTTPS", "SSL", "TLS", "Load Balancing",
+
+	"Unity", "Unreal Engine", "Three.js", "WebGL", "ARCore", "ARKit",
+
+	"Android Development", "iOS Development", "Flutter", "React Native", "Xamarin", "Ionic",
+
+	"Blockchain", "Ethereum", "Solidity", "Web3", "Hyperledger", "Smart Contracts",
+
+	"Agile", "Scrum", "Kanban", "Jira", "Confluence", "Notion",
+
+	"System Design", "Design Patterns", "Object Oriented Programming", "Functional Programming", "Multithreading", "Distributed Systems",
+
+	"API Development", "API Testing", "API Gateway", "Caching", "Rate Limiting",
+
+	"Web Scraping", "BeautifulSoup", "Scrapy", "Selenium WebDriver",
+
+	"Logging", "Monitoring", "Prometheus", "Grafana", "ELK Stack", "Logstash", "Kibana",
+
+	"Data Visualization", "Dashboard Development", "Business Intelligence"
+]
