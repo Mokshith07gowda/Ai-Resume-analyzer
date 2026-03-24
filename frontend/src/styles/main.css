@@ -941,6 +941,89 @@ input[type="file"]:hover {
   margin-bottom: 2rem;
 }
 
+.skill-editor {
+  display: flex;
+  gap: 0.65rem;
+  margin-bottom: 0.9rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.skill-input {
+  min-width: 220px;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #1f2937;
+  font-size: 0.92rem;
+}
+
+.skill-input:focus {
+  outline: none;
+  border-color: #1e40af;
+  box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.12);
+}
+
+.skill-pill-list {
+  list-style: none;
+  display: flex !important;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  padding: 0;
+  margin: 0.4rem 0 0;
+  grid-template-columns: none !important;
+}
+
+.skill-pill-list li.skill-pill,
+.resume-data li.skill-pill,
+.jd-data li.skill-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.4rem 0.55rem 0.4rem 0.8rem;
+  border: 1px solid #c7d2fe;
+  border-left: 1px solid #c7d2fe;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #eef2ff 0%, #eff6ff 100%);
+  color: #1e3a8a;
+  font-size: 0.86rem;
+  font-weight: 600;
+  width: auto;
+}
+
+.skill-pill-list li.skill-pill:hover,
+.resume-data li.skill-pill:hover,
+.jd-data li.skill-pill:hover {
+  transform: none;
+  box-shadow: none;
+  border-left: 1px solid #c7d2fe;
+}
+
+.skill-pill-label {
+  white-space: nowrap;
+}
+
+.skill-pill-remove {
+  width: 20px;
+  height: 20px;
+  border: none;
+  border-radius: 50%;
+  background: #1e40af;
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.skill-pill-remove:hover {
+  background: #1d4ed8;
+}
+
 .jd-score-block {
   margin-top: 1.5rem;
   padding: 1.25rem;

@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from .routers import resume_routes, jd_routes, auth_routes
+from .routers import resume_routes, auth_routes
 from .database import connect_to_mongo, close_mongo_connection
 
 app = FastAPI(
@@ -38,7 +38,6 @@ async def shutdown_event():
 
 app.include_router(auth_routes.router, prefix="/api/auth", tags=["Authentication"])
 app.include_router(resume_routes.router, prefix="/api", tags=["Resume"])
-app.include_router(jd_routes.router, prefix="/api", tags=["Job Description"])
 
 
 @app.get("/")

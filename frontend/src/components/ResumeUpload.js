@@ -6,6 +6,42 @@ function ResumeUpload() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
+  const [editableSkills, setEditableSkills] = useState([]);
+  const [newSkill, setNewSkill] = useState('');
+
+  const syncResultSkills = (skills) => {
+    setEditableSkills(skills);
+    setResult((prev) => {
+      if (!prev || !prev.resume_data) return prev;
+      return {
+        ...prev,
+        resume_data: {
+          ...prev.resume_data,
+          skills
+        }
+      };
+    });
+  };
+
+  const addSkill = () => {
+    const skill = newSkill.trim();
+    if (!skill) return;
+
+    const exists = editableSkills.some((item) => item.toLowerCase() === skill.toLowerCase());
+    if (exists) {
+      setNewSkill('');
+      return;
+    }
+
+    const updated = [...editableSkills, skill];
+    syncResultSkills(updated);
+    setNewSkill('');
+  };
+
+  const removeSkill = (indexToRemove) => {
+    const updated = editableSkills.filter((_, index) => index !== indexToRemove);
+    syncResultSkills(updated);
+  };
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -31,10 +67,13 @@ function ResumeUpload() {
     setLoading(true);
     setError(null);
     setResult(null);
+    setEditableSkills([]);
+    setNewSkill('');
 
     try {
       const response = await uploadResume(selectedFile);
       setResult(response);
+      syncResultSkills(response?.resume_data?.skills || []);
       console.log('Resume uploaded successfully:', response);
     } catch (err) {
       setError(err.response?.data?.detail || 'An error occurred while processing the document. Please try again.');
@@ -84,10 +123,30 @@ function ResumeUpload() {
             <p><strong>Experience:</strong> {result.resume_data.experience}</p>
             
             <div className="section-divider">
-              <p><strong>Skills:</strong></p>
-              <ul className="skills-grid">
-                {result.resume_data.skills.map((skill, index) => (
-                  <li key={index}>{skill}</li>
+              <p><strong>Skills (Editable):</strong></p>
+              <div className="skill-editor">
+                <input
+                  type="text"
+                  value={newSkill}
+                  onChange={(e) => setNewSkill(e.target.value)}
+                  placeholder="Add a skill"
+                  className="skill-input"
+                />
+                <button type="button" onClick={addSkill} className="clear-button">Add Skill</button>
+              </div>
+              <ul className="skill-pill-list">
+                {editableSkills.map((skill, index) => (
+                  <li key={index} className="skill-pill">
+                    <span className="skill-pill-label">{skill}</span>
+                    <button
+                      type="button"
+                      onClick={() => removeSkill(index)}
+                      className="skill-pill-remove"
+                      aria-label={`Remove ${skill}`}
+                    >
+                      x
+                    </button>
+                  </li>
                 ))}
               </ul>
             </div>
