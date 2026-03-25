@@ -258,10 +258,4 @@ Response:
 
 This project is part of a learning implementation.
 
-## 👥 Contributors
 
-Your Team
-
----
-
-**Note:** This is Week 2 implementation. More features will be added in upcoming weeks.
