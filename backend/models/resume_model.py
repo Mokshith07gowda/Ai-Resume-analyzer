@@ -1,9 +1,8 @@
 from pydantic import BaseModel
-from typing import List, Optional, Dict
+from typing import List, Optional
 
 
 class AdditionalInfo(BaseModel):
-    """Model for additional resume information"""
     certifications: List[str] = []
     achievements: List[str] = []
     linkedin: str = ""
@@ -13,7 +12,6 @@ class AdditionalInfo(BaseModel):
 
 
 class ResumeData(BaseModel):
-    """Model for parsed resume data"""
     name: str
     skills: List[str]
     education: str
@@ -26,7 +24,6 @@ class ResumeData(BaseModel):
 
 
 class ResumeUploadResponse(BaseModel):
-    """Model for resume upload response"""
     message: str
     resume_data: Optional[ResumeData] = None
     filename: str

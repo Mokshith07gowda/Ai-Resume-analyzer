@@ -1,6 +1,3 @@
-"""
-MongoDB Models for Database Collections
-"""
 from pydantic import BaseModel, EmailStr, Field, ConfigDict
 from typing import Optional, List, Any
 from datetime import datetime
@@ -8,15 +5,12 @@ from bson import ObjectId
 
 
 class PyObjectId(ObjectId):
-    """Custom ObjectId type for Pydantic v2"""
     @classmethod
     def __get_pydantic_core_schema__(cls, source_type: Any, handler):
         from pydantic_core import core_schema
         return core_schema.no_info_plain_validator_function(
             cls.validate,
-            serialization=core_schema.plain_serializer_function_ser_schema(
-                lambda x: str(x)
-            ),
+            serialization=core_schema.plain_serializer_function_ser_schema(str),
         )
 
     @classmethod
@@ -29,12 +23,8 @@ class PyObjectId(ObjectId):
 
 
 class UserModel(BaseModel):
-    """User model for MongoDB"""
-    model_config = ConfigDict(
-        populate_by_name=True,
-        arbitrary_types_allowed=True
-    )
-    
+    model_config = ConfigDict(populate_by_name=True, arbitrary_types_allowed=True)
+
     id: Optional[PyObjectId] = Field(default_factory=PyObjectId, alias="_id")
     full_name: str
     email: EmailStr
@@ -46,24 +36,18 @@ class UserModel(BaseModel):
 
 
 class ResumeDocument(BaseModel):
-    """Resume document model for MongoDB"""
-    model_config = ConfigDict(
-        populate_by_name=True,
-        arbitrary_types_allowed=True
-    )
-    
+    model_config = ConfigDict(populate_by_name=True, arbitrary_types_allowed=True)
+
     id: Optional[PyObjectId] = Field(default_factory=PyObjectId, alias="_id")
     user_id: Optional[str] = None
     file_name: str
     file_type: str
     upload_date: datetime = Field(default_factory=datetime.utcnow)
-    
     name: Optional[str] = None
     email: Optional[str] = None
     phone: Optional[str] = None
     linkedin: Optional[str] = None
     github: Optional[str] = None
-    
     education: Optional[List[dict]] = []
     experience: Optional[List[dict]] = []
     projects: Optional[List[dict]] = []
@@ -74,12 +58,8 @@ class ResumeDocument(BaseModel):
 
 
 class JobDescriptionDocument(BaseModel):
-    """Job description document model for MongoDB"""
-    model_config = ConfigDict(
-        populate_by_name=True,
-        arbitrary_types_allowed=True
-    )
-    
+    model_config = ConfigDict(populate_by_name=True, arbitrary_types_allowed=True)
+
     id: Optional[PyObjectId] = Field(default_factory=PyObjectId, alias="_id")
     user_id: Optional[str] = None
     title: str
@@ -90,21 +70,15 @@ class JobDescriptionDocument(BaseModel):
 
 
 class AnalysisResultDocument(BaseModel):
-    """Analysis result document model for MongoDB"""
-    model_config = ConfigDict(
-        populate_by_name=True,
-        arbitrary_types_allowed=True
-    )
-    
+    model_config = ConfigDict(populate_by_name=True, arbitrary_types_allowed=True)
+
     id: Optional[PyObjectId] = Field(default_factory=PyObjectId, alias="_id")
     user_id: Optional[str] = None
     resume_id: str
     jd_id: Optional[str] = None
-    
     ats_score: Optional[float] = None
     matching_score: Optional[float] = None
     skill_gaps: Optional[List[str]] = []
     recommendations: Optional[List[str]] = []
     predicted_roles: Optional[List[str]] = []
-    
     created_at: datetime = Field(default_factory=datetime.utcnow)

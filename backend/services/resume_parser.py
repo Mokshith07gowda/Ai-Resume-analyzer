@@ -1,7 +1,7 @@
 import pdfplumber
 from docx import Document
 import re
-from .skill_extractor import extract_resume_skills
+from services.skill_extractor import extract_resume_skills
 
 
 def extract_text_from_pdf(file_path: str) -> str:
