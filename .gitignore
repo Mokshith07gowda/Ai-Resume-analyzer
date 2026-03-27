@@ -5,6 +5,8 @@ __pycache__/
 *.so
 .Python
 venv/
+.venv/
+.venv311/
 env/
 ENV/
 *.egg-info/
@@ -34,7 +36,6 @@ frontend/.env
 frontend/.env.local
 
 # Backend
-backend/**/*.py
 !backend/**/.gitkeep
 requirements.txt
 MONGODB_SETUP.md
@@ -56,3 +57,15 @@ htmlcov/
 # Environment variables
 .env
 .env.local
+
+
+venv/
+__pycache__/
+*.pyc
+*.pyo
+.env
+temp_uploads/
+app.log
+*.egg-info/
+dist/
+.DS_Store

@@ -11,6 +11,7 @@ function SignUp({ onSwitchToSignIn, onSignUpSuccess }) {
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [serverMessage, setServerMessage] = useState(null);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -28,6 +29,7 @@ function SignUp({ onSwitchToSignIn, onSignUpSuccess }) {
         [name]: ''
       }));
     }
+    setServerMessage(null);
   };
 
   const validateForm = () => {
@@ -69,6 +71,7 @@ function SignUp({ onSwitchToSignIn, onSignUpSuccess }) {
     }
 
     setIsLoading(true);
+    setServerMessage(null);
 
     try {
       const response = await fetch('http://localhost:8000/api/auth/register', {
@@ -86,19 +89,36 @@ function SignUp({ onSwitchToSignIn, onSignUpSuccess }) {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.detail || 'Registration failed');
+        if (response.status === 400) {
+          setServerMessage({ 
+            type: 'error', 
+            text: data.detail || 'Email already registered. Please sign in instead.' 
+          });
+        } else {
+          setServerMessage({ 
+            type: 'error', 
+            text: data.detail || 'Registration failed. Please try again.' 
+          });
+        }
+        return;
       }
 
       console.log('Registration successful:', data);
       
       localStorage.setItem('user', JSON.stringify(data));
+      localStorage.setItem('authToken', data.id);
       
-      onSignUpSuccess && onSignUpSuccess();
+      setServerMessage({ type: 'success', text: 'Registration successful! Redirecting...' });
+      
+      setTimeout(() => {
+        onSignUpSuccess && onSignUpSuccess();
+      }, 1000);
       
     } catch (error) {
       console.error('Registration error:', error);
-      setErrors({
-        email: error.message || 'Registration failed. Please try again.'
+      setServerMessage({ 
+        type: 'error', 
+        text: 'Unable to connect to server. Please try again later.' 
       });
     } finally {
       setIsLoading(false);
@@ -155,6 +175,12 @@ function SignUp({ onSwitchToSignIn, onSignUpSuccess }) {
                 <h2>Create Account</h2>
                 <p>Join AI Resume Analyzer to get started</p>
               </div>
+
+              {serverMessage && (
+                <div className={`server-message ${serverMessage.type}`}>
+                  {serverMessage.text}
+                </div>
+              )}
 
               <form onSubmit={handleSubmit} className="auth-form">
           <div className="form-group">

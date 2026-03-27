@@ -2,6 +2,28 @@
 
 An AI-powered resume analysis tool that extracts structured information from resumes and job descriptions, enabling intelligent matching and recommendations.
 
+## 🚀 How to Run
+
+**Terminal 1 - Backend:**
+```bash
+py -3.11 -m venv .venv311
+.\.venv311\Scripts\activate
+python -m uvicorn backend.main:app --reload --host localhost --port 8000
+```
+
+**Terminal 2 - Frontend:**
+```bash
+cd frontend
+npm start
+```
+
+**Access:**
+- Frontend: http://localhost:3000
+- Backend API: http://localhost:8000
+- API Docs: http://localhost:8000/docs
+
+---
+
 ## 🎯 Week 2 Implementation Status
 
 ### ✅ Completed Features
@@ -85,15 +107,10 @@ ai-resume-analyzer/
    cd "AI Resume Analyzer demo"
    ```
 
-2. **Create and activate virtual environment**
+2. **Create and activate virtual environment (Windows / PowerShell)**
    ```bash
-   python -m venv venv
-   
-   # Windows
-   venv\Scripts\activate
-   
-   # Linux/Mac
-   source venv/bin/activate
+  py -3.11 -m venv .venv311
+  .\.venv311\Scripts\activate
    ```
 
 3. **Install Python dependencies**
@@ -106,10 +123,9 @@ ai-resume-analyzer/
    python -m spacy download en_core_web_sm
    ```
 
-5. **Run the backend server**
+5. **Run the backend server from project root**
    ```bash
-   cd backend
-   uvicorn main:app --reload --host 0.0.0.0 --port 8000
+  python -m uvicorn backend.main:app --reload --host localhost --port 8000
    ```
 
    The API will be available at `http://localhost:8000`

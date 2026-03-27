@@ -8,6 +8,42 @@ function JDInput() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
+  const [editableRequiredSkills, setEditableRequiredSkills] = useState([]);
+  const [newRequiredSkill, setNewRequiredSkill] = useState('');
+
+  const syncRequiredSkills = (skills) => {
+    setEditableRequiredSkills(skills);
+    setResult((prev) => {
+      if (!prev || !prev.jd_data) return prev;
+      return {
+        ...prev,
+        jd_data: {
+          ...prev.jd_data,
+          required_skills: skills
+        }
+      };
+    });
+  };
+
+  const addRequiredSkill = () => {
+    const skill = newRequiredSkill.trim();
+    if (!skill) return;
+
+    const exists = editableRequiredSkills.some((item) => item.toLowerCase() === skill.toLowerCase());
+    if (exists) {
+      setNewRequiredSkill('');
+      return;
+    }
+
+    const updated = [...editableRequiredSkills, skill];
+    syncRequiredSkills(updated);
+    setNewRequiredSkill('');
+  };
+
+  const removeRequiredSkill = (indexToRemove) => {
+    const updated = editableRequiredSkills.filter((_, index) => index !== indexToRemove);
+    syncRequiredSkills(updated);
+  };
 
   const handleTextChange = (event) => {
     setJdText(event.target.value);
@@ -43,10 +79,13 @@ function JDInput() {
       setLoading(true);
       setError(null);
       setResult(null);
+      setEditableRequiredSkills([]);
+      setNewRequiredSkill('');
 
       try {
         const response = await uploadJobDescription(jdText);
         setResult(response);
+        syncRequiredSkills(response?.jd_data?.required_skills || []);
         console.log('Job description processed successfully:', response);
       } catch (err) {
         setError(err.response?.data?.detail || 'An error occurred while analyzing the job description. Please try again.');
@@ -63,10 +102,13 @@ function JDInput() {
       setLoading(true);
       setError(null);
       setResult(null);
+      setEditableRequiredSkills([]);
+      setNewRequiredSkill('');
 
       try {
         const response = await uploadJobDescriptionFile(selectedFile);
         setResult(response);
+        syncRequiredSkills(response?.jd_data?.required_skills || []);
         console.log('Job description file processed successfully:', response);
       } catch (err) {
         setError(err.response?.data?.detail || 'An error occurred while processing the file. Please try again.');
@@ -82,6 +124,8 @@ function JDInput() {
     setSelectedFile(null);
     setResult(null);
     setError(null);
+    setEditableRequiredSkills([]);
+    setNewRequiredSkill('');
   };
 
   return (
@@ -165,11 +209,31 @@ function JDInput() {
           <h3>Analysis Complete - Extracted Requirements</h3>
           <div className="jd-data">
             <div className="skills-section">
-              <p><strong>Required Skills:</strong></p>
-              <ul>
-                {result.jd_data.required_skills.length > 0 ? (
-                  result.jd_data.required_skills.map((skill, index) => (
-                    <li key={index}>{skill}</li>
+              <p><strong>Required Skills (Editable):</strong></p>
+              <div className="skill-editor">
+                <input
+                  type="text"
+                  value={newRequiredSkill}
+                  onChange={(e) => setNewRequiredSkill(e.target.value)}
+                  placeholder="Add required skill"
+                  className="skill-input"
+                />
+                <button type="button" onClick={addRequiredSkill} className="clear-button">Add Skill</button>
+              </div>
+              <ul className="skill-pill-list">
+                {editableRequiredSkills.length > 0 ? (
+                  editableRequiredSkills.map((skill, index) => (
+                    <li key={index} className="skill-pill">
+                      <span className="skill-pill-label">{skill}</span>
+                      <button
+                        type="button"
+                        onClick={() => removeRequiredSkill(index)}
+                        className="skill-pill-remove"
+                        aria-label={`Remove ${skill}`}
+                      >
+                        x
+                      </button>
+                    </li>
                   ))
                 ) : (
                   <li>No skills detected</li>
@@ -189,6 +253,34 @@ function JDInput() {
                 )}
               </ul>
             </div>
+
+            {result.jd_data.scoring && (
+              <div className="jd-score-block">
+                <p><strong>JD Confidence & Role Fit Signals:</strong></p>
+                <div className="jd-score-grid">
+                  <div className="jd-score-card">
+                    <span className="jd-score-label">Skill Coverage</span>
+                    <span className="jd-score-value">{result.jd_data.scoring.skill_coverage_pct}%</span>
+                  </div>
+                  <div className="jd-score-card">
+                    <span className="jd-score-label">Top Keyword Density</span>
+                    <span className="jd-score-value">{result.jd_data.scoring.top_keyword_density_pct}%</span>
+                  </div>
+                </div>
+                <div className="jd-role-hints">
+                  <p><strong>Role Hints:</strong></p>
+                  {result.jd_data.scoring.role_hints && result.jd_data.scoring.role_hints.length > 0 ? (
+                    <ul>
+                      {result.jd_data.scoring.role_hints.map((role, index) => (
+                        <li key={index}>{role}</li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="jd-role-empty">No strong role hints found yet.</p>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}
